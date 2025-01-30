@@ -5,9 +5,20 @@ import { UsersService } from '../users/users.service';
 import { Sequelize } from 'sequelize';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from '../../database/models/User.entity';
+import { GoogleRecaptchaModule } from '@nestlab/google-recaptcha';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { getGoogleRecaptchaConfig } from '../../config/recaptcha.config';
 
 @Module({
-  imports: [SequelizeModule.forFeature([User])],
+  imports: [
+    SequelizeModule.forFeature([User]),
+    GoogleRecaptchaModule.forRootAsync({
+      //теперь можем повесить на какой то запрос декоратор @Recaptcha
+      imports: [ConfigModule],
+      useFactory: getGoogleRecaptchaConfig,
+      inject: [ConfigService],
+    }),
+  ],
   controllers: [AuthController],
   providers: [AuthService, UsersService],
 })

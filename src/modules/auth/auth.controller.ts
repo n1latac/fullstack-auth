@@ -10,6 +10,7 @@ import {
 import { AuthService } from './auth.service';
 import { LoginDTO, RegisterDTO } from './auth.dto';
 import { Request, Response } from 'express';
+import { Recaptcha } from '@nestlab/google-recaptcha';
 
 @Controller('auth')
 export class AuthController {
@@ -21,6 +22,7 @@ export class AuthController {
     return await this.authService.register(req, data);
   }
 
+  @Recaptcha()
   @Post('login')
   @HttpCode(HttpStatus.OK)
   async login(@Req() req: Request, @Body() data: LoginDTO) {

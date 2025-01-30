@@ -11,7 +11,7 @@ export class UsersService {
     private readonly usersRepo: typeof User,
   ) {}
 
-  public async findById(id: string) {
+  public async findById(id: number) {
     const user = await this.usersRepo.findOne({
       where: {
         id,
