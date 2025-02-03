@@ -8,6 +8,7 @@ import { User } from '../../database/models/User.entity';
 import { GoogleRecaptchaModule } from '@nestlab/google-recaptcha';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { getGoogleRecaptchaConfig } from '../../config/recaptcha.config';
+import { ProviderModule } from './provider/provider.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { getGoogleRecaptchaConfig } from '../../config/recaptcha.config';
       useFactory: getGoogleRecaptchaConfig,
       inject: [ConfigService],
     }),
+    ProviderModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, UsersService],
